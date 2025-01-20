@@ -1,9 +1,8 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import DirectorSerializer, MovieSerializer, ReviewSerializer
+from .serializers import DirectorSerializer, MovieSerializer, ReviewSerializer, MovieDerectorSerializer
 from rest_framework import status
 from .models import Director, Movie, Review
-from django.http import JsonResponse
 
 
 
@@ -89,3 +88,19 @@ def review_id_view(request, id):
     data = ReviewSerializer(instance=reviews).data
 
     return Response(data=data)
+
+@api_view(['GET'])
+def movies_reviews(request):
+    reviews = Review.objects.all()
+
+    list = ReviewSerializer(instance=reviews, many=True).data
+
+    return Response(data=list)
+
+@api_view(['GET'])
+def directors_movie(request):
+    movies = Movie.objects.all()
+
+    list_ = MovieDerectorSerializer(instance=movies, many=True).data
+
+    return Response(data=list_)
