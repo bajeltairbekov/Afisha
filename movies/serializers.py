@@ -1,10 +1,16 @@
 from rest_framework import serializers
 from .models import Director, Movie, Review
 
+
+class MovieItmeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Movie
+        fields = 'title description'.split()
+
 class MovieSerializer(serializers.ModelSerializer):
     class Meta:
         model = Movie
-        fields = 'title description director genre search_word_list'.split()
+        fields = 'id title description director genre search_word_list'.split()
         depth = 1
 
 class DirectorSerializer(serializers.ModelSerializer):
@@ -21,7 +27,12 @@ class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
         fields = ['id', 'movie', 'text',  'stars']
-        depth = 1
+
+
+class ReviewItmeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Review
+        fields = ['text',  'stars']
 
 
 class MovieReviewSerializer(serializers.ModelSerializer):
